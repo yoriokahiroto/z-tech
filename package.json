@@ -1,10 +1,12 @@
 {
-  "name": "i2c-amg8833-example",
+  "name": "hotpi-app",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@chirimen-raspi/polyfill": "^1.0.1",
     "@chirimen/amg8833": "latest",
     "@chirimen/gp2y0e03": "1.0.3"
-  }
+  },
+  "keywords": [],
+  "description": "岡山メイカーズチャレンジのチーム「ホットパイ」の成果物"
 }
