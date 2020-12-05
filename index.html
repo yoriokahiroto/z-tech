@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1"
+    />
+    <title>i2c-AMG8833</title>
+    <script src="node_modules/@chirimen-raspi/polyfill/polyfill.js"></script>
+    <script src="node_modules/@chirimen/amg8833/amg8833.js"></script>
+    <script src="node_modules/@chirimen/gp2y0e03/gp2y0e03.js"></script>
+    <script src="./main.js" defer></script>
+    <style>
+      table,
+      p {
+        color: blue;
+        text-align: center;
+        font-size: 24px;
+        empty-cells: show;
+      }
+
+      img {
+        position: absolute;
+        top: 120px;
+        left: 260px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p id="head">AMG8833</p>
+    <img src="AMG8833.png" width="400" />
+
+    <form id="gain" onchange="changeGainMode(event)">
+      <input id="autoGainRadio" type="radio" value="auto" /> オート
+      <input id="manualGainRadio" type="radio" value="man" checked /> マニュアル
+      max:<input type="text" id="tMaxUI" size="6" />℃　 min:<input
+        type="text"
+        id="tMinUI"
+        size="6"
+      />℃
+    </form>
+    max:<span id="tMaxTxt"></span>℃, min:<span id="tMinTxt"></span>℃
+    <table style="width: 200px; height: 200px;" id="tImg"></table>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    max : <span id="max"></span>℃ Average temperture is :
+    <span id="last"></span>
+    <br />
+    <br />
+    <div>
+      <a href="http://192.168.3.31:8080/html/test.html">カメラの映像</a>
+      csv : <span id="csv1"></span>
+      <br />
+      <span id="space"></span>
+    </div>
+  </body>
+</html>
