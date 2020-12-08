@@ -22,6 +22,19 @@ async function main() {
     var i2cAccess = await navigator.requestI2CAccess(); //1回のみ宣言
     var port = i2cAccess.ports.get(1); //1回のみ宣言
 
+    //LED部分
+    const gpioAccess = await navigator.requestGPIOAccess();
+    const ledRedPort = gpioAccess.ports.get(19); // LED の GPIO ポート番号
+    const ledBluePort = gpioAccess.ports.get(20); // LED の GPIO ポート番号
+    const ledGreenPort = gpioAccess.ports.get(21); // LED の GPIO ポート番号
+    await ledRedPort.export("out"); // ポートを出力モードに設定
+    await ledBluePort.export("out"); // ポートを出力モードに設定
+    await ledGreenPort.export("out"); // ポートを出力モードに設定
+
+    await ledRedPort.write(0);
+    await ledBluePort.write(1);
+    await ledGreenPort.write(1);
+
     //距離センサ部分
     var amg8833 = new AMG8833(port, 0x68); // 初期値 0x69 のモデルもあるので注意！
     await amg8833.init();
@@ -46,11 +59,20 @@ async function main() {
         dmaxmax = maxt(dmax); //最大値を取る
         heatMap(tImage);
         console.log(tImage);
+
+        //LEDが赤色に点灯
+        await ledRedPort.write(0);
+        await ledBluePort.write(1);
+        await ledGreenPort.write(1);
         await sleep(100);
         sum = sum + dmaxmax;
         count++;
       } else if (distance > 30) {
         valelem.innerHTML = "近づいてください";
+        //LEDが赤色に点灯
+        await ledRedPort.write(0);
+        await ledBluePort.write(1);
+        await ledGreenPort.write(1);
       } else if (distance <= 10 && distance >= 3) {
         var spanedSec = 0;
         //2秒計測
@@ -58,21 +80,39 @@ async function main() {
           spanedSec = spanedSec + 100;
           valelem.innerHTML = spanedSec * 0.001 + "[s]経過";
           distance = await sensor_unit.read();
+
+          //LEDが青色に点灯
+          await ledRedPort.write(1);
+          await ledBluePort.write(0);
+          await ledGreenPort.write(1);
           await sleep(80); //このwhileの処理時間を考慮
           if (spanedSec > 2000) {
             valelem.innerHTML = "OK!";
             break end;
           }
         }
-      } else valelem.innerHTML = "離れてください"; //3cm未満の場合
+      } else {
+        valelem.innerHTML = "離れてください"; //3cm未満の場合
+        //LEDが赤色に点灯
+        await ledRedPort.write(0);
+        await ledBluePort.write(1);
+        await ledGreenPort.write(1);
+      }
       await sleep(100);
     }
     var tem = sum / count;
-    body.innerHTML = tem.toFixed(1) + "℃";
+    body.innerHTML = tem.toFixed(1) + "℃"; //体温表示
+
+    //カメラを起動➡︎未完成
     var promise = navigator.mediaDevices.getUserMedia({
       audio: true,
       video: true
     });
+
+    //LEDが赤色に点灯
+    await ledRedPort.write(0);
+    await ledBluePort.write(1);
+    await ledGreenPort.write(1);
   } catch (err) {
     console.log("READ ERROR:" + err);
   }
