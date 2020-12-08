@@ -32,8 +32,7 @@
   </head>
 
   <body>
-    <p id="head">AMG8833</p>
-    <img src="AMG8833.png" width="400" />
+    <p id="head">Distance & Thermography</p>
 
     <form id="gain" onchange="changeGainMode(event)">
       <input id="autoGainRadio" type="radio" value="auto" /> オート
@@ -46,16 +45,11 @@
     </form>
     max:<span id="tMaxTxt"></span>℃, min:<span id="tMinTxt"></span>℃
     <table style="width: 200px; height: 200px;" id="tImg"></table>
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    max : <span id="max"></span>℃ Average temperture is :
-    <span id="last"></span>
-    <br />
     <br />
     <div>
-      <a href="http://192.168.3.31:8080/html/test.html">カメラの映像</a>
-      csv : <span id="csv1"></span>
-      <br />
-      <span id="space"></span>
+      <a href="http://192.168.0.8:8080/html/test.html">カメラの映像</a>
+      <p id="distance">init</p>
+      <p id="temperature">体温</p>
     </div>
   </body>
 </html>
