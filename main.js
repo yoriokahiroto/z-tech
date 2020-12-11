@@ -1,4 +1,4 @@
-var autoGain = false;
+var autoGain = true;
 var tMax, tMin;
 
 initTable();
@@ -86,7 +86,7 @@ async function main() {
           await ledBluePort.write(0);
           await ledGreenPort.write(1);
           await sleep(80); //このwhileの処理時間を考慮
-          if (spanedSec > 2000) {
+          if (spanedSec >= 2000) {
             valelem.innerHTML = "OK!";
             break end;
           }
