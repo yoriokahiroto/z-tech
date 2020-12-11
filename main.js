@@ -100,8 +100,9 @@ async function main() {
       }
       await sleep(100);
     }
-    var tem = sum / count;
-    body.innerHTML = tem.toFixed(1) + "℃"; //体温表示
+    var tem = sum / count; //体温の平均化
+    body.innerHTML = tem.toFixed(1) + "℃"; //小数点１桁までの体温表示
+    submitForm(tem.toFixed(1));
 
     //カメラを起動➡︎未完成
     var promise = navigator.mediaDevices.getUserMedia({
