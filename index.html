@@ -17,12 +17,6 @@
     ></script>
     <script src="./main.js" defer></script>
     <script src="./ajax.js" defer></script>
-    <script>
-      $(document).on("click", "#submit", function () {
-        var data = $("form").serializeArray();
-        submitForm(data);
-      });
-    </script>
     <style>
       table,
       p {
@@ -63,12 +57,6 @@
       <p id="distance">init</p>
       <p id="temperature">体温</p>
     </div>
-    <form id="ajaxform" method="POST">
-      <input type="hidden" name="value1" value="" />
-      <input type="hidden" name="value2" value="" />
-      <input type="hidden" name="value3" value="" />
-      <a href="javascript:void(0);" id="submit">結果を取得する</a>
-    </form>
     <div id="answer"></div>
   </body>
 </html>
