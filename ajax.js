@@ -11,7 +11,7 @@ function submitForm(data) {
       alert("データの送信が完了しました。");
       console.log(data);
       $("#answer").html(
-        '<span style="color: red;">あなたの体温は' + data + "です</span>"
+        '<span style="color: red;">' + data.result + "</span>"
       );
     })
     .fail(function () {

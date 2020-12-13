@@ -102,6 +102,7 @@ async function main() {
     }
     var tem = sum / count; //体温の平均化
     body.innerHTML = tem.toFixed(1) + "℃"; //小数点１桁までの体温表示
+	document.getElementById('postTemp').value = tem.toFixed(1);
     var data = $("form").serializeArray();
     submitForm(data);
 
