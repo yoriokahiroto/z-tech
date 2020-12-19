@@ -44,7 +44,8 @@ async function main() {
     var sensor_unit = new GP2Y0E03(port, 0x40);
     await sensor_unit.init();
     var count = 0;
-    var sum = 0;
+    var sum1 = 0;
+    var sum2=0;
     var d = [8][8];
     var dmax = [];
     var dmaxmax;
@@ -57,7 +58,9 @@ async function main() {
         var tImage = await amg8833.readData();
         d = tImage; //tImageを２次元配列dに格納
         dmax = maxs(d); //2→1(次元配列)
+        dmin=mins(d);
         dmaxmax = maxt(dmax); //最大値を取る
+        dminmin=mint(dmin); //最小値を取る
         heatMap(tImage);
         console.log(tImage);
 
@@ -66,7 +69,8 @@ async function main() {
         await ledBluePort.write(1);
         await ledGreenPort.write(1);
         await sleep(100);
-        sum = sum + dmaxmax;
+        sum1 = sum1 + dmaxmax;
+        sum2=sum2+dminmin;
         count++;
       } else if (distance > 30) {
         valelem.innerHTML = "近づいてください";
@@ -113,9 +117,11 @@ async function main() {
       }
       await sleep(100);
     }
-    var tem = sum / count; //体温の平均化
-    body.innerHTML = tem.toFixed(1) + "℃"; //小数点１桁までの体温表示
-    document.getElementById("postTemp").value = tem.toFixed(1);
+    var tem = sum1 / count; //体温の平均化
+    var min=sum2/count;
+    var taion=-0.53648868*min+17.5870766+tem;
+    body.innerHTML = taion.toFixed(1) + "℃"; //小数点１桁までの体温表示
+    document.getElementById("postTemp").value = taion.toFixed(1);
     var data = $("form").serializeArray();
     submitForm(data);
 
@@ -136,6 +142,15 @@ function maxs(d) {
 function maxt(d) {
   //１次元配列の中から最大の要素を取り出す関数
   return Math.max.apply(null, d);
+}
+
+function mins(d) {
+  //2次元配列の中か最大値を取り出して１次元配列にする関数
+  return d.map(Function.apply.bind(Math.min, null));
+}
+function mint(d) {
+  //１次元配列の中から最大の要素を取り出す関数
+  return Math.min.apply(null, d);
 }
 
 function initTable() {
