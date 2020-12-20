@@ -24,16 +24,16 @@ async function main() {
 
     //LED部分
     const gpioAccess = await navigator.requestGPIOAccess();
-    const ledRedPort = gpioAccess.ports.get(19); // LED の GPIO ポート番号
-    const ledBluePort = gpioAccess.ports.get(20); // LED の GPIO ポート番号
-    const ledGreenPort = gpioAccess.ports.get(21); // LED の GPIO ポート番号
+    const ledRedPort = gpioAccess.ports.get(19); // 赤色LED の GPIO ポート番号
+    const ledBluePort = gpioAccess.ports.get(20); // 青色LED の GPIO ポート番号
+    const ledGreenPort = gpioAccess.ports.get(21); // 緑色LED の GPIO ポート番号
     await ledRedPort.export("out"); // ポートを出力モードに設定
     await ledBluePort.export("out"); // ポートを出力モードに設定
     await ledGreenPort.export("out"); // ポートを出力モードに設定
 
+    //赤色に点灯
     await ledRedPort.write(0);
     await ledBluePort.write(1);
-    // await ledGreenPort.write(1);
 
     //距離センサ部分
     var amg8833 = new AMG8833(port, 0x68); // 初期値 0x69 のモデルもあるので注意！
@@ -129,7 +129,7 @@ async function main() {
         await sleep(100);
       }
       var tem = sum1 / count; //体温の平均化
-      var min = sum2 / count;
+      var min = sum2 / count; //外部温度(最低温度)の平均化
       var taion = -0.53648868 * min + 17.5870766 + tem;
       body.innerHTML = taion.toFixed(1) + "℃"; //小数点１桁までの体温表示
       document.getElementById("postTemp").value = taion.toFixed(1);
@@ -162,11 +162,11 @@ function maxt(d) {
 }
 
 function mins(d) {
-  //2次元配列の中か最大値を取り出して１次元配列にする関数
+  //2次元配列の中から最小値を取り出して１次元配列にする関数
   return d.map(Function.apply.bind(Math.min, null));
 }
 function mint(d) {
-  //１次元配列の中から最大の要素を取り出す関数
+  //１次元配列の中から最小の要素を取り出す関数
   return Math.min.apply(null, d);
 }
 
