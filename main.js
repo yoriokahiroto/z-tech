@@ -62,7 +62,6 @@ async function main() {
           dmaxmax = maxt(dmax); //最大値を取る
           dminmin = mint(dmin); //最小値を取る
           heatMap(tImage);
-          console.log(tImage);
 
           //LEDが赤色に点灯
           await ledRedPort.write(0);
