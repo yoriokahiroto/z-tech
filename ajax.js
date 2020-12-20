@@ -14,5 +14,8 @@ function submitForm(data) {
     })
     .fail(function () {
       console.log("データの通信に失敗しました。");
+      $("#answer").html(
+        '<span style="color: red;">データの送信に失敗しました</span>'
+      );
     });
 }
