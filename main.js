@@ -33,7 +33,7 @@ async function main() {
 
     await ledRedPort.write(0);
     await ledBluePort.write(1);
-    await ledGreenPort.write(1);
+    // await ledGreenPort.write(1);
 
     //距離センサ部分
     var amg8833 = new AMG8833(port, 0x68); // 初期値 0x69 のモデルもあるので注意！
@@ -42,6 +42,17 @@ async function main() {
     //サーモグラフィ部分
     var sensor_unit = new GP2Y0E03(port, 0x40);
     await sensor_unit.init();
+
+    // 緑LEDを点滅させる
+    async function blink_green_led() {
+      while (true) {
+        await ledGreenPort.write(0);
+        await sleep(500);
+        await ledGreenPort.write(1);
+        await sleep(500);
+      }
+    }
+    blink_green_led();
 
     while (1) {
       var count = 0;
@@ -67,7 +78,7 @@ async function main() {
           //LEDが赤色に点灯
           await ledRedPort.write(0);
           await ledBluePort.write(1);
-          await ledGreenPort.write(1);
+          // await ledGreenPort.write(1);
           await sleep(100);
           sum1 = sum1 + dmaxmax;
           sum2 = sum2 + dminmin;
@@ -77,7 +88,7 @@ async function main() {
           //LEDが赤色に点灯
           await ledRedPort.write(0);
           await ledBluePort.write(1);
-          await ledGreenPort.write(1);
+          // await ledGreenPort.write(1);
         } else if (distance <= 10 && distance >= 3) {
           var spanedSec = 0;
           //1.5秒計測
@@ -89,7 +100,7 @@ async function main() {
             //LEDが青色に点灯
             await ledRedPort.write(1);
             await ledBluePort.write(0);
-            await ledGreenPort.write(1);
+            // await ledGreenPort.write(1);
             await sleep(80); //このwhileの処理時間を考慮
             if (spanedSec >= 1500) {
               valelem.innerHTML = "OK!";
@@ -113,7 +124,7 @@ async function main() {
           //LEDが赤色に点灯
           await ledRedPort.write(0);
           await ledBluePort.write(1);
-          await ledGreenPort.write(1);
+          // await ledGreenPort.write(1);
         }
         await sleep(100);
       }
@@ -128,7 +139,7 @@ async function main() {
       //LEDが赤色に点灯
       await ledRedPort.write(0);
       await ledBluePort.write(1);
-      await ledGreenPort.write(1);
+      // await ledGreenPort.write(1);
 
       // 手が離れるまで待機→最初に戻る
       while (distance < 10 && distance != null) {
