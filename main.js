@@ -16,33 +16,34 @@ tMaxUI.value = tMax;
 tMinUI.value = tMin;
 
 async function main() {
-  while (1) {
-    var valelem = document.getElementById("distance");
-    var body = document.getElementById("temperature");
-    try {
-      var i2cAccess = await navigator.requestI2CAccess(); //1回のみ宣言
-      var port = i2cAccess.ports.get(1); //1回のみ宣言
+  var valelem = document.getElementById("distance");
+  var body = document.getElementById("temperature");
+  try {
+    var i2cAccess = await navigator.requestI2CAccess(); //1回のみ宣言
+    var port = i2cAccess.ports.get(1); //1回のみ宣言
 
-      //LED部分
-      const gpioAccess = await navigator.requestGPIOAccess();
-      const ledRedPort = gpioAccess.ports.get(19); // LED の GPIO ポート番号
-      const ledBluePort = gpioAccess.ports.get(20); // LED の GPIO ポート番号
-      const ledGreenPort = gpioAccess.ports.get(21); // LED の GPIO ポート番号
-      await ledRedPort.export("out"); // ポートを出力モードに設定
-      await ledBluePort.export("out"); // ポートを出力モードに設定
-      await ledGreenPort.export("out"); // ポートを出力モードに設定
+    //LED部分
+    const gpioAccess = await navigator.requestGPIOAccess();
+    const ledRedPort = gpioAccess.ports.get(19); // LED の GPIO ポート番号
+    const ledBluePort = gpioAccess.ports.get(20); // LED の GPIO ポート番号
+    const ledGreenPort = gpioAccess.ports.get(21); // LED の GPIO ポート番号
+    await ledRedPort.export("out"); // ポートを出力モードに設定
+    await ledBluePort.export("out"); // ポートを出力モードに設定
+    await ledGreenPort.export("out"); // ポートを出力モードに設定
 
-      await ledRedPort.write(0);
-      await ledBluePort.write(1);
-      await ledGreenPort.write(1);
+    await ledRedPort.write(0);
+    await ledBluePort.write(1);
+    await ledGreenPort.write(1);
 
-      //距離センサ部分
-      var amg8833 = new AMG8833(port, 0x68); // 初期値 0x69 のモデルもあるので注意！
-      await amg8833.init();
+    //距離センサ部分
+    var amg8833 = new AMG8833(port, 0x68); // 初期値 0x69 のモデルもあるので注意！
+    await amg8833.init();
 
-      //サーモグラフィ部分
-      var sensor_unit = new GP2Y0E03(port, 0x40);
-      await sensor_unit.init();
+    //サーモグラフィ部分
+    var sensor_unit = new GP2Y0E03(port, 0x40);
+    await sensor_unit.init();
+
+    while (1) {
       var count = 0;
       var sum1 = 0;
       var sum2 = 0;
@@ -134,9 +135,9 @@ async function main() {
         distance = await sensor_unit.read();
         await sleep(500);
       }
-    } catch (err) {
-      console.log("READ ERROR:" + err);
     }
+  } catch (err) {
+    console.log("READ ERROR:" + err);
   }
 }
 
