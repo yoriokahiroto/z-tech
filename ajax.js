@@ -8,13 +8,11 @@ function submitForm(data) {
     timeout: 5000
   })
     .done(function (data) {
-      alert("データの送信が完了しました。");
+      console.log("データの送信が完了しました。");
       console.log(data);
-      $("#answer").html(
-        '<span style="color: red;">' + data.result + "</span>"
-      );
+      $("#answer").html('<span style="color: red;">' + data.result + "</span>");
     })
     .fail(function () {
-      alert("データの通信に失敗しました。");
+      console.log("データの通信に失敗しました。");
     });
 }
