@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" language="javascript">
+        function onButtonClick() {
+          target = document.getElementById("output");
+          target.innerText += document.forms.id_form1.id_textBox1.value+"\n";
+          //target.innerText = document.id_form1.id_textBox1.value;//これでもOK
+        }
+  </script>
+
+</head>
+<body>
+　<a>買うもの</a><br>
+  <form name="form1" id="id_form1" action="">
+    <input name="textBox1" id="id_textBox1" type="text" value="" />
+    <input type="button" value="決定" onclick="onButtonClick();" />
+  </form>
+  <hr/>
+  <div id="output"></div>
+  
+  <div class="menu">
+    <a class="btn btn--orange btn--circle btn--circle-a btn--shadow"　>
+		お肉
+		<span class="caret"></span>
+    </a>
+	<ul>
+		<li role="presentation"><a href="#">リンクのリスト１</a></li>
+		<li role="presentation"><a href="#">リンクのリスト２</a></li>
+		<li role="presentation"><a href="#">リンクのリスト３</a></li>
+	</ul>
+</div>
+</body>
+</html>
